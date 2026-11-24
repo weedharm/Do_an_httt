@@ -21,17 +21,14 @@ def del_last_page(img):
                 line -= 1
         line -= 1
 def creat_image(file, fn_file = '.pdf', poppler_path = ''):
-    pages = convert_from_path(file+fn_file, 500, poppler_path = poppler_path)
+    pages = convert_from_path(file+fn_file, 500, poppler_path = poppler_path or None)
 
-    try:
-        os.mkdir(file)
-        print("da tao thu muc " + file)
-    except:
-        print("da tao thu muc " + file)
+    os.makedirs(file, exist_ok=True)
+    print("da tao thu muc " + file)
 
     num_image = 1
     for page in pages:
-        page.save(file + f'\\page{num_image}.png', 'PNG')
+        page.save(os.path.join(file, f'page{num_image}.png'), 'PNG')
         num_image += 1
 def creat_image_full(file, num_pages, y1, y2, column):
     image = []
